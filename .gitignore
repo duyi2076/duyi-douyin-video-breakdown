@@ -1,0 +1,24 @@
+# Runtime evidence and generated reports
+output/
+tmp/
+build/
+dist/
+run/
+**/manifest.json
+**/report-web.json
+**/拆解报告.html
+**/完整拆解报告.md
+**/transcript/
+**/frames/
+**/source/video.*
+
+# Local secrets and machine-specific files
+.env
+.env.*
+*.key
+*.pem
+*.cookie
+*.log
+.DS_Store
+__pycache__/
+*.py[cod]
