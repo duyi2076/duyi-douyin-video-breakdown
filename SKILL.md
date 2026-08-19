@@ -48,7 +48,9 @@ python3 "{SKILL_ROOT}/scripts/transcribe_with_doubao.py" --preflight
 - Windows、Linux 或不支持 MLX 的 macOS：安装并使用普通 `openai-whisper`，运行流水线时加 `--allow-slow-whisper`。
 - `mlx_whisper` 不是 Windows 的必需依赖，也不要在 Windows 上反复尝试安装它。
 - `ffmpeg`、`ffprobe`、Python 的 `markdown` 包、Node.js 和 `yt-dlp` 缺少时，先自动安装再运行。
-- 抖音链接采集还需要运行环境提供的 `opencli` 浏览器入口。它不是普通 Python 依赖；如果当前环境没有可信安装来源，不要猜包名或安装来路不明的替代品。此时改用用户提供的本地视频，或明确报告链接采集不可用。
+- 抖音链接采集还需要 `opencli` CLI 和 Chrome Browser Bridge。缺少 `opencli` 时，AI 应通过可信 npm 安装 `@jackwener/opencli`，然后运行 `opencli --version` 和 `opencli doctor` 验证。具体流程见 [`references/opencli-setup.md`](references/opencli-setup.md)。
+- `opencli` 的 Chrome 扩展、OpenCLIApp 安装和抖音登录需要用户在本机确认，AI 不复制浏览器 Profile、不导出 Cookie，也不把 `opencli` 二进制或扩展打包进本 Skill。
+- 只有 CLI 没有 Browser Bridge 时，不要假装页面采集成功；改用本地视频，或明确报告链接采集被浏览器连接阻塞。
 
 安装后必须用版本命令、`--preflight` 或一次真实小流程验证，不以“安装命令返回 0”作为成功证据。需要管理员权限、登录、凭证或不明来源安装包时，停止并向用户说明具体阻塞点。
 

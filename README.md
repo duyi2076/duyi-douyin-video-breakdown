@@ -41,6 +41,8 @@ python3 scripts/finalize_breakdown.py \
 
 Windows、Linux 或不支持 MLX 的 macOS 不需要安装 `mlx_whisper`，AI 会改用普通 Whisper，并在运行时开启慢速 CPU 回退。依赖预检和平台安装路由见 [`references/runtime-dependencies.md`](references/runtime-dependencies.md)。
 
+抖音链接采集还需要 OpenCLI CLI 和 Chrome Browser Bridge。缺少 CLI 时，AI 可以自动通过可信 npm 安装；Chrome 扩展安装和抖音登录需要用户一次确认。完整设置见 [`references/opencli-setup.md`](references/opencli-setup.md)。
+
 ## 公开边界
 
 只读取公开页面和用户明确提供的本地素材，不访问创作者后台，不绕过权限，不把可见评论或互动数当成后台真实数据或付费验证。报告中的原话必须能回到转写或用户原稿，缺证据就标记为“素材不足”或“待核验”。

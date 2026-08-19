@@ -89,10 +89,13 @@ Windows、Linux 或普通 Whisper 路径的 `--preflight` 只检查 MLX，不应
 
 ## 浏览器采集边界
 
-抖音链接采集脚本通过 `opencli` 访问公开页面。`opencli` 可能由宿主 Agent 环境提供，不等同于 Node.js 或 npm 包。AI 应先检查 `opencli` 是否存在：
+抖音链接采集脚本通过 `opencli` 和 Chrome Browser Bridge 访问公开页面。AI 应先检查 `opencli` 是否存在：
 
-- 存在：继续链接采集。
-- 缺少但当前环境有明确、可信的安装入口：安装后用 `opencli --help` 或实际公开页面采集验证。
-- 缺少且没有可信安装入口：不猜包名、不装不明替代品，改用用户提供的本地视频，或把采集阶段标记为环境阻塞。
+- 存在：运行 `opencli --version` 和 `opencli doctor`，确认 Browser Bridge 已连接后继续。
+- 缺少：在 Node.js/npm 可用时，自动运行 `npm install -g @jackwener/opencli`，再验证版本和 `doctor`。
+- CLI 存在但 Browser Bridge 未连接：提示用户安装官方扩展或 OpenCLIApp，并在 Chrome 中登录抖音；未完成前不进入链接采集。
+- 无 Node.js/npm 或没有可信安装入口：不猜包名、不装不明替代品，改用用户提供的本地视频，或把采集阶段标记为环境阻塞。
+
+详细设置见 [`opencli-setup.md`](opencli-setup.md)。
 
 任何凭证、Cookie、环境文件和浏览器登录状态都不进入 Skill 源码、公开报告或 Git 提交。
