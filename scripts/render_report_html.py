@@ -102,6 +102,16 @@ def split_report(text: str) -> tuple[str, str]:
     return title, "\n".join(lines).strip()
 
 
+def strip_theory_annotations(text: str) -> str:
+    """Theory is a Markdown analysis aid, not part of the HTML reading layer."""
+    lines = []
+    for line in text.splitlines():
+        if re.match(r"^\s*(理论视角|理论依据|解释视角)\s*[：:]", line):
+            continue
+        lines.append(line)
+    return "\n".join(lines)
+
+
 def find_first(run_dir: Path, candidates: tuple[str, ...]) -> str:
     for relative in candidates:
         if (run_dir / relative).is_file():
@@ -715,6 +725,7 @@ def render_basic_page(run_dir: Path, report_path: Path, meta: dict, breakdown: d
     video = find_first(run_dir, VIDEO_CANDIDATES)
 
     report_title, body_md = split_report(report_path.read_text(encoding="utf-8"))
+    body_md = strip_theory_annotations(body_md)
     md = markdown.Markdown(
         extensions=["tables", "toc"],
         extension_configs={"toc": {"slugify": slugify_unicode, "toc_depth": "2-3"}},

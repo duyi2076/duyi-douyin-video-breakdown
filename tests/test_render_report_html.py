@@ -132,6 +132,21 @@ class RenderReportHtmlTest(unittest.TestCase):
             self.assertIn("素材不足", page)
             self.assertIn("未知作者", page)
 
+    def test_theory_annotations_are_hidden_in_basic_html(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            run_dir, report = self.make_fixture(Path(temp))
+            report.write_text(
+                "# 测试报告标题\n\n## 结论\n\n正文。\n\n理论视角：戈夫曼·拟剧理论（1959）\n\n## 证据\n\n证据内容。\n",
+                encoding="utf-8",
+            )
+            code, result = self.run_render(run_dir, report)
+            self.assertEqual(code, 0)
+            page = (run_dir / "拆解报告.html").read_text(encoding="utf-8")
+            self.assertIn("正文。", page)
+            self.assertIn("证据内容。", page)
+            self.assertNotIn("理论视角", page)
+            self.assertNotIn("拟剧理论", page)
+
     def test_missing_report_fails(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             run_dir = Path(temp) / "run"

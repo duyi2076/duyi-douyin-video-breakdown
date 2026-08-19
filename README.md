@@ -11,6 +11,7 @@
 - 生成带时间戳的转写和关键帧
 - 分析开篇、创作者层级、营销动作、留存机制、结构和 CTA
 - 生成可迁移的结构槽位、填空模板和评论选题
+- 为主要拆解模块附一行理论视角，理论与证据分层保存
 - 把最终 Markdown 报告渲染成自包含 HTML
 
 ## 快速开始
@@ -41,6 +42,8 @@ Windows、Linux 或不支持 MLX 的 macOS 不需要安装 `mlx_whisper`，AI �
 
 结构迁移只复用功能关系，不照搬原作者的句壳、比喻、口头禅、节奏和人设承诺。
 
+理论基础单独放在 `references/theory-basis/理论基础.md`。理论只作为解释视角，不替代原话、时间戳、画面和公开页面证据。理论标注写入 Markdown 报告，HTML 页面不展示理论标注。
+
 ## 私有 ASR
 
 默认不依赖凭证。如果使用私有 Agent Plan ASR，必须显式传入 `--asr-script` 和 `--env`，这两个文件不属于本公开包，也不应提交到版本库：
@@ -63,11 +66,3 @@ node --check scripts/collect_douyin_video.mjs
 ```
 
 详见 [SKILL.md](SKILL.md) 和 `references/` 下的报告标准。
-
-## 许可证与安全边界
-
-本仓库自有内容采用 [CC BY-NC 4.0](LICENSE)：允许署名分享和改编，但禁止商业使用。这是源码公开（source-available）协议，不是 OSI 认可的软件开源许可证。
-
-运行边界、凭证处理和依赖说明见 [SECURITY.md](SECURITY.md) 与
-[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。不要把 API Key、Cookie、
-Bearer Token、环境文件、浏览器配置或私有 ASR 适配器提交到仓库。

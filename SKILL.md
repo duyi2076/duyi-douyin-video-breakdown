@@ -105,6 +105,7 @@ Runner 会按同一个 run directory（证据目录）落盘并记录 `manifest.
 报告结构和 JSON 字段见：
 
 - `references/report-template.md`
+- `references/theory-basis/理论基础.md`
 - `references/breakdown-quality-standard.md`
 - `references/layered-breakdown-v2.md`
 - `references/structure-taxonomy.md`
@@ -119,6 +120,14 @@ python3 "{SKILL_ROOT}/scripts/finalize_breakdown.py" \
 ```
 
 默认生成 `{RUN_DIR}/拆解报告.html`。也可以指定 `--output`。HTML 是阅读呈现层，不替代 Markdown 和原始证据。
+
+### 理论视角层
+
+理论基础单独存放在 `references/theory-basis/理论基础.md`。生成最终 Markdown 报告时，创作者层级、营销点、Hook、时间线、CTA、填空模板、评论选题和证据边界这八个主要模块，各自追加一行 `理论视角：...`。
+
+理论视角只负责命名和解释已经有证据支持的机制，不是证据、不是作者意图的证明，也不能替代原话、时间戳、画面、页面数据或评论样本。不得把类比写成师承关系；出处存在争议时，必须保留限定语。
+
+`report-web.json` 不写理论字段。HTML 不显示“理论视角”“理论依据”或“解释视角”行，保证理论不抢占证据和结论的阅读位置。
 
 ## 报告最低交付线
 
