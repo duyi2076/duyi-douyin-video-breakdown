@@ -25,40 +25,30 @@ opencli doctor
 opencli profile list
 ```
 
-如果提示 Browser Bridge 未连接，用户需要完成一次浏览器设置：
+如果提示 Browser Bridge 未连接，Agent 应自己完成可自动化的浏览器设置：
 
-1. 安装 OpenCLI 官方 Chrome Web Store 扩展，或安装 OpenCLIApp。
-2. 在 Chrome 中打开抖音并登录目标账号。
-3. 确认扩展已启用，并按 Chrome 提示允许它访问目标网站。
-4. 重新运行 `opencli doctor`，直到浏览器连接正常。
+1. 用浏览器控制能力打开 OpenCLI 官方 Chrome Web Store 安装页或 OpenCLIApp 下载页。
+2. 自动点击安装、打开 Chrome 扩展管理页，并确认 Browser Bridge 已启用。
+3. 自动打开抖音页面。
+4. 如果出现登录、系统权限或扩展安装确认，只让用户在浏览器窗口中完成这一项确认。
+5. Agent 自己运行 `opencli doctor`，确认连接后继续任务。
 
-AI 应直接把下面这段操作告诉用户，而不是只报“未连接”：
+AI 应把浏览器操作进度和截图展示给用户，而不是让用户回到终端：
 
 ```text
-请保持 Chrome 开着，并在 Chrome 里打开抖音、确认已经登录。
-如果还没有 OpenCLI Browser Bridge，请安装官方扩展或 OpenCLIApp，并启用它。
-然后在终端运行：
-
-opencli doctor
+我正在打开 Chrome 并安装 Browser Bridge。
+如果浏览器弹出登录或权限确认，请直接在浏览器窗口完成；终端命令由我自动执行。
 ```
 
-如果用户有多个 Chrome Profile：
+如果用户有多个 Chrome Profile，Agent 自动执行 `opencli profile list`，选择或询问用户
+确认正确的 Profile，随后自动执行 `opencli profile use <别名>` 和 `opencli doctor`。
 
-```bash
-opencli profile list
-opencli profile use <已配置的别名>
-opencli doctor
-```
-
-如果是本地 Daemon 未运行：
-
-```bash
-opencli daemon restart
-opencli doctor
-```
+如果是本地 Daemon 未运行，Agent 自动执行 `opencli daemon restart` 和 `opencli doctor`，
+不要求用户打开终端。
 
 连续两次 `doctor` 仍然失败时，停止重装和重试，把 `doctor` 的具体输出作为阻塞信息
-交给用户；不要复制 Cookie 或浏览器 Profile，也不要绕过扩展权限。
+交给用户；但仍然不要让用户回到终端。Agent 应展示失败截图和下一步浏览器操作，
+不要复制 Cookie 或浏览器 Profile，也不要绕过扩展权限。
 
 如果当前 Agent 具备浏览器截图能力，AI 还应把安装过程改成截图引导：
 
@@ -69,8 +59,9 @@ opencli doctor
 5. 用户完成操作后，再截图或展示 `opencli doctor` 的连接结果。
 
 截图只能展示公开安装页面和必要的操作区域。必须遮挡账号名、Cookie、Profile
-标识、私聊内容、其他标签页和本地路径。浏览器截图能力不可用时，才退回到上面的
-文字步骤和官方链接；不能编造截图或把终端报错截图当成安装指引。
+标识、私聊内容、其他标签页和本地路径。浏览器截图能力不可用时，才退回到文字说明
+和官方链接；不能编造截图或把终端报错截图当成安装指引。若浏览器控制能力也不可用，
+必须明确说明需要用户在浏览器中完成一次安装或登录确认，而不是把终端命令甩给用户。
 
 AI 不应静默修改 Chrome 扩展、复制浏览器 Profile 或导出 Cookie 文件。浏览器
 扩展安装和登录属于用户确认边界。
