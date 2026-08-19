@@ -69,3 +69,11 @@ node --check scripts/collect_douyin_video.mjs
 ```
 
 详见 [SKILL.md](SKILL.md) 和 `references/` 下的报告标准。
+
+## 许可证与安全边界
+
+本仓库自有内容采用 [CC BY-NC 4.0](LICENSE)：允许署名分享和改编，但禁止商业使用。这是源码公开（source-available）协议，不是 OSI 认可的软件开源许可证。
+
+运行边界、凭证处理和依赖说明见 [SECURITY.md](SECURITY.md) 与
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。不要把 API Key、Cookie、
+Bearer Token、环境文件、浏览器配置或私有 ASR 适配器提交到仓库。
