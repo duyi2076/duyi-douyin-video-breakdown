@@ -1,13 +1,13 @@
 # duyi-douyin-video-breakdown-v3
 
-把公开抖音链接或本地视频整理成可核验的证据目录、深度拆解报告和本地 HTML 页面。
+把公开抖音链接整理成可核验的证据目录、深度拆解报告和本地 HTML 页面。
 
 这是一个公开核心包：只保留采集、转写、关键帧、报告和 HTML 呈现能力，不包含个人知识库或远端工作台同步。运行时由 AI 先检查依赖，缺少可信公开依赖时自动安装；不要求用户先手工读安装教程。
 
 ## 能做什么
 
 - 保存公开页面可见数据、评论和截图
-- 准备本地视频或公开可下载视频
+- 下载公开抖音视频或页面提取出的公开媒体
 - 生成带时间戳的转写和关键帧
 - 分析开篇、创作者层级、营销动作、留存机制、结构和 CTA
 - 生成可迁移的结构槽位、填空模板和评论选题
@@ -18,14 +18,6 @@
 ```bash
 python3 scripts/run_breakdown.py \
   --source "https://v.douyin.com/your-link/" \
-  --out-root "$HOME/douyin-video-breakdowns"
-```
-
-本地视频：
-
-```bash
-python3 scripts/run_breakdown.py \
-  --source "/path/to/video.mp4" \
   --out-root "$HOME/douyin-video-breakdowns"
 ```
 
@@ -55,7 +47,7 @@ Windows、Linux 或不支持 MLX 的 macOS 不需要安装 `mlx_whisper`，AI �
 
 ```bash
 python3 scripts/run_breakdown.py \
-  --source "/path/to/video.mp4" \
+  --source "https://v.douyin.com/your-link/" \
   --use-doubao \
   --asr-script "/private/path/asr_adapter.py" \
   --asr-env "/private/path/asr.env" \

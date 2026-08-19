@@ -17,7 +17,7 @@
 | 阶段 | 主要证据 | 失败时先查 | 正确恢复 |
 |---|---|---|---|
 | `collect_douyin` | `source/metadata.json`、详情页截图 | 详情页、浏览器会话、采集返回 | 原目录续跑；需要刷新时显式 `--refresh-collection` |
-| `prepare_video` | `source/download.json`、`source/video.mp4` | 媒体 URL、浏览器 cookies、ffmpeg | 原目录续跑；必要时让用户提供本地视频 |
+| `prepare_video` | `source/download.json`、`source/video.mp4` | 媒体 URL、浏览器 cookies、ffmpeg | 原目录续跑；无法下载时保留证据并标记媒体缺失 |
 | `transcribe` | `transcript/asr.json` | provider、executable、Profile HOME、真实 HOME、timeout | 先跑 ASR preflight，再用 `--run-dir` 续跑 |
 | `extract_frames` | `frames/frames.json` | ffmpeg 返回、视频可读性 | 原目录续跑 |
 | `build_report` | `breakdown.json`、自动报告 | 上游证据是否缺失 | 修复上游后原目录续跑 |

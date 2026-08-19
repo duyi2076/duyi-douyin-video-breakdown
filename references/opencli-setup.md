@@ -76,7 +76,7 @@ AI 不应静默修改 Chrome 扩展、复制浏览器 Profile 或导出 Cookie �
 
 - `opencli` 与 Browser Bridge 都正常：运行完整页面证据采集。
 - 只有 `opencli` CLI、Browser Bridge 未连接：停止链接采集，报告具体阻塞点。
-- 用户提供本地视频：跳过 OpenCLI，继续转写、抽帧和深度拆解。
+- Browser Bridge 未连接：不能进入链接采集或后续拆解，先完成连接或报告阻塞。
 
 OpenCLI 不是本 Skill 的源码依赖，也不随本仓库重新分发；它按自己的许可证和
 更新节奏维护。

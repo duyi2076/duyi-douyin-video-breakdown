@@ -110,17 +110,6 @@ def download_direct_track(source: str, out: Path) -> dict:
     }
 
 
-def prepare_local(source: str, source_dir: Path) -> dict:
-    path = Path(source).expanduser()
-    if not path.exists():
-        return {"ok": False, "mode": "local", "error": f"Input video not found: {path}"}
-    suffix = path.suffix.lower() or ".mp4"
-    out = source_dir / f"video{suffix}"
-    if path.resolve() != out.resolve():
-        shutil.copy2(path, out)
-    return {"ok": True, "mode": "local", "video_path": str(out), "original_path": str(path)}
-
-
 def find_downloaded_video(source_dir: Path) -> list[Path]:
     return sorted(
         [
@@ -300,8 +289,8 @@ def download_split_media(video_source: str, audio_source: str, source_dir: Path)
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Prepare video source")
-    parser.add_argument("--source", required=True, help="Local video path or public URL")
+    parser = argparse.ArgumentParser(description="Prepare a public Douyin video source")
+    parser.add_argument("--source", required=True, help="Public Douyin URL or direct media URL")
     parser.add_argument("--out-dir", required=True, type=Path)
     parser.add_argument("--no-download", action="store_true")
     parser.add_argument("--audio-source", default="", help="Optional direct audio-track URL for DASH media")
@@ -312,18 +301,17 @@ def main() -> int:
     )
     args = parser.parse_args()
 
+    if not is_url(args.source):
+        raise SystemExit("Public Douyin URL required; local video inputs are not supported.")
+
     source_dir = args.out_dir / "source"
     source_dir.mkdir(parents=True, exist_ok=True)
-    result = (
-        prepare_url(
-            args.source,
-            source_dir,
-            args.no_download,
-            args.cookies_from_browser,
-            args.audio_source,
-        )
-        if is_url(args.source)
-        else prepare_local(args.source, source_dir)
+    result = prepare_url(
+        args.source,
+        source_dir,
+        args.no_download,
+        args.cookies_from_browser,
+        args.audio_source,
     )
     (source_dir / "download.json").write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps(result, ensure_ascii=False, indent=2))

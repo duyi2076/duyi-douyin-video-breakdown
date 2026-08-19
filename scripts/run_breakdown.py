@@ -206,7 +206,7 @@ def write_minimal_metadata(path: Path, source: str, title: str) -> dict:
         "publishedAt": "",
         "metrics": {"likes": 0, "comments": 0, "collects": 0, "shares": 0},
         "comments": [],
-        "dataBoundary": ["Local video file; public Douyin metadata was not collected."],
+        "dataBoundary": ["Public Douyin metadata only; media download was not collected."],
     }
     write_json(path, metadata)
     return metadata
@@ -238,8 +238,8 @@ def select_media_tracks(metadata: dict) -> tuple[str, str]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Run a Douyin viral video breakdown")
-    parser.add_argument("--source", help="Local video path or public Douyin URL")
+    parser = argparse.ArgumentParser(description="Run a public Douyin video breakdown")
+    parser.add_argument("--source", help="Public Douyin URL")
     parser.add_argument("--metadata", type=Path, help="Existing metadata JSON")
     parser.add_argument("--title", default="")
     parser.add_argument("--out-root", type=Path, default=DEFAULT_OUT_ROOT)
@@ -273,6 +273,8 @@ def main() -> int:
 
     if not args.source and not args.metadata:
         raise SystemExit("Provide --source or --metadata.")
+    if args.source and not is_url(args.source):
+        raise SystemExit("Public Douyin URL required; local video inputs are not supported.")
 
     skill_dir = Path(__file__).resolve().parents[1]
     args.out_root = args.out_root.expanduser().resolve()
@@ -320,6 +322,8 @@ def main() -> int:
             shutil.copy2(args.metadata, metadata_path)
         metadata = load_json(metadata_path, {})
         source = source or metadata.get("url") or metadata.get("input") or ""
+        if source and not is_url(source):
+            raise SystemExit("Metadata must contain a public Douyin URL; local video inputs are not supported.")
     elif source and is_url(source):
         can_reuse_collection = (
             not args.refresh_collection
@@ -459,13 +463,13 @@ def main() -> int:
         (run_dir / "transcript").mkdir(exist_ok=True)
         (run_dir / "frames").mkdir(exist_ok=True)
         if not (run_dir / "transcript" / "asr.json").exists():
-            write_json(run_dir / "transcript" / "asr.json", {"ok": False, "error": "No local video available."})
+            write_json(run_dir / "transcript" / "asr.json", {"ok": False, "error": "No downloaded video available."})
         if not (run_dir / "transcript" / "transcript.md").exists():
             (run_dir / "transcript" / "transcript.md").write_text(
-                "# ASR 转写\n\n素材不足：没有可用本地视频。\n", encoding="utf-8"
+                "# ASR 转写\n\n素材不足：没有可用的已下载视频。\n", encoding="utf-8"
             )
         if not (run_dir / "frames" / "frames.json").exists():
-            write_json(run_dir / "frames" / "frames.json", {"ok": False, "frames": [], "error": "No local video available."})
+            write_json(run_dir / "frames" / "frames.json", {"ok": False, "frames": [], "error": "No downloaded video available."})
 
     report_cmd = [
         sys.executable,

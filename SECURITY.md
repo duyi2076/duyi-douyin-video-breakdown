@@ -12,7 +12,7 @@ videos, public pages, local scripts and installed dependencies are trusted.
 
 ## Input and network boundary
 
-- The workflow reads public pages and user-provided local media only.
+- The workflow reads public pages and media downloaded from those public pages only.
 - It does not access creator backends or bypass privacy, payment or permission
   controls.
 - Validate downloaded media and keep generated evidence outside the source tree.

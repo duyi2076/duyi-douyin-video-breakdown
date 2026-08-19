@@ -85,7 +85,7 @@ ASR 再按平台验证：
 python3 "{SKILL_ROOT}/scripts/transcribe_with_doubao.py" --preflight
 ```
 
-Windows、Linux 或普通 Whisper 路径的 `--preflight` 只检查 MLX，不应被当成唯一门禁。此时直接用一个真实本地视频运行 ASR，确认 `transcript/asr.json` 的 `ok` 为 `true` 且 `provider` 为 `openai_whisper`。
+Windows、Linux 或普通 Whisper 路径的 `--preflight` 只检查 MLX，不应被当成唯一门禁。此时用一次真实运行下载的视频验证 ASR，确认 `transcript/asr.json` 的 `ok` 为 `true` 且 `provider` 为 `openai_whisper`。
 
 ## 浏览器采集边界
 
@@ -94,7 +94,7 @@ Windows、Linux 或普通 Whisper 路径的 `--preflight` 只检查 MLX，不应
 - 存在：运行 `opencli --version` 和 `opencli doctor`，确认 Browser Bridge 已连接后继续。
 - 缺少：在 Node.js/npm 可用时，自动运行 `npm install -g @jackwener/opencli`，再验证版本和 `doctor`。
 - CLI 存在但 Browser Bridge 未连接：提示用户安装官方扩展或 OpenCLIApp，并在 Chrome 中登录抖音；未完成前不进入链接采集。
-- 无 Node.js/npm 或没有可信安装入口：不猜包名、不装不明替代品，改用用户提供的本地视频，或把采集阶段标记为环境阻塞。
+- 无 Node.js/npm 或没有可信安装入口：不猜包名、不装不明替代品，直接把链接采集阶段标记为环境阻塞。
 
 详细设置见 [`opencli-setup.md`](opencli-setup.md)。
 

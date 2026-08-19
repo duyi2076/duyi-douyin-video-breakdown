@@ -21,4 +21,4 @@ If public video download fails:
 1. Keep `source/metadata.json` and `source/douyin-extract.md`.
 2. Build a weak report from public title, metrics, and comments.
 3. Mark audio and visual evidence as missing.
-4. Ask for a local video file if final audio/visual breakdown is required.
+4. Keep audio and visual evidence marked as missing until the public media can be downloaded.

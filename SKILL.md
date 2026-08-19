@@ -1,13 +1,13 @@
 ---
 name: duyi-douyin-video-breakdown-v3
-description: 公开核心版抖音视频拆解工作流。接收公开抖音链接或本地视频，保存可核验证据，生成结构化深度拆解和 HTML 报告。适用于分析视频为什么有效、如何迁移结构、如何形成填空模板与评论选题。不包含个人知识库或远端工作台同步。
+description: 公开核心版抖音视频拆解工作流。接收公开抖音链接，保存可核验证据，生成结构化深度拆解和 HTML 报告。适用于分析视频为什么有效、如何迁移结构、如何形成填空模板与评论选题。不包含个人知识库或远端工作台同步。
 ---
 
 # 抖音视频拆解 V3
 
 ## 目标
 
-把一条公开抖音视频或本地视频整理成一份可复核、可迁移的拆解报告：
+把一条公开抖音视频整理成一份可复核、可迁移的拆解报告：
 
 1. 保留来源、可见数据、视频、转写和关键帧等证据。
 2. 分开“表面在做什么”和“实际完成了什么传播或营销动作”。
@@ -19,7 +19,6 @@ description: 公开核心版抖音视频拆解工作流。接收公开抖音链�
 ## 触发条件
 
 - 用户提供抖音链接，要求拆解、分析、找爆点、提炼结构或生成报告。
-- 用户提供本地 MP4、MOV 等视频，要求做深度口播拆解。
 - 用户要求把视频变成可迁移的结构、填空题、CTA 或评论选题。
 
 如果用户只要剪辑、封面或发布，不调用本 Skill。
@@ -50,7 +49,7 @@ python3 "{SKILL_ROOT}/scripts/transcribe_with_doubao.py" --preflight
 - `ffmpeg`、`ffprobe`、Python 的 `markdown` 包、Node.js 和 `yt-dlp` 缺少时，先自动安装再运行。
 - 抖音链接采集还需要 `opencli` CLI 和 Chrome Browser Bridge。缺少 `opencli` 时，AI 应通过可信 npm 安装 `@jackwener/opencli`，然后运行 `opencli --version` 和 `opencli doctor` 验证。具体流程见 [`references/opencli-setup.md`](references/opencli-setup.md)。
 - `opencli` 的 Chrome 扩展、OpenCLIApp 安装和抖音登录需要用户在本机确认，AI 不复制浏览器 Profile、不导出 Cookie，也不把 `opencli` 二进制或扩展打包进本 Skill。
-- 只有 CLI 没有 Browser Bridge 时，AI 必须自己执行安装、浏览器打开、扩展检查、Profile 选择和 `doctor` 验证；连续两次 `doctor` 失败时，若具备浏览器控制和截图能力，优先用截图操作和标注安装步骤。用户只在浏览器窗口完成登录或权限确认，不得被要求回到终端。不要假装页面采集成功；仍未连接时，改用本地视频，或明确报告链接采集被浏览器连接阻塞。
+- 只有 CLI 没有 Browser Bridge 时，AI 必须自己执行安装、浏览器打开、扩展检查、Profile 选择和 `doctor` 验证；连续两次 `doctor` 失败时，若具备浏览器控制和截图能力，优先用截图操作和标注安装步骤。用户只在浏览器窗口完成登录或权限确认，不得被要求回到终端。不要假装页面采集成功；仍未连接时，明确报告链接采集被浏览器连接阻塞。
 
 安装后必须用版本命令、`--preflight` 或一次真实小流程验证，不以“安装命令返回 0”作为成功证据。需要管理员权限、登录、凭证或不明来源安装包时，停止并向用户说明具体阻塞点。
 
@@ -76,14 +75,6 @@ python3 "{SKILL_ROOT}/scripts/transcribe_with_doubao.py" \
 ```bash
 python3 "{SKILL_ROOT}/scripts/run_breakdown.py" \
   --source "{DOUYIN_URL}" \
-  --out-root "{OUT_ROOT}"
-```
-
-本地视频入口：
-
-```bash
-python3 "{SKILL_ROOT}/scripts/run_breakdown.py" \
-  --source "{VIDEO_PATH}" \
   --out-root "{OUT_ROOT}"
 ```
 
@@ -144,7 +135,7 @@ python3 "{SKILL_ROOT}/scripts/finalize_breakdown.py" \
 ## 脚本职责
 
 - `scripts/collect_douyin_video.mjs`：采集公开页面可见信息、评论和页面截图。
-- `scripts/prepare_video.py`：准备本地视频或公开可下载视频。
+- `scripts/prepare_video.py`：下载公开抖音视频或处理页面提取出的公开媒体 URL。
 - `scripts/transcribe_with_doubao.py`：统一本地 ASR 与显式私有 ASR 适配器入口。
 - `scripts/extract_frames.py`：按视频时间轴提取关键帧。
 - `scripts/build_report.py`：基于证据生成自动初稿和证据摘要。
