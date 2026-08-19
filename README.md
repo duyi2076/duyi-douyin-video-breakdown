@@ -33,11 +33,29 @@
 
 ## 快速开始
 
+### 1. 安装 Skill
+
+先把本仓库安装到 AI 客户端的 Skills 目录。支持从 GitHub 安装 Skill 的客户端，直接使用这个仓库地址：
+
+<https://github.com/duyi2076/duyi-douyin-video-breakdown>
+
+没有自动安装器时，可以手动克隆到本机的 Skill 目录：
+
+```bash
+git clone https://github.com/duyi2076/duyi-douyin-video-breakdown.git "$HOME/.agents/skills/duyi-douyin-video-breakdown-v3"
+```
+
+安装后让 AI 读取 `SKILL.md`。AI 会自行检查并安装运行所需的公开依赖，包括 Whisper、FFmpeg、Node.js、yt-dlp 和 OpenCLI；浏览器扩展安装、抖音登录等需要用户一次确认。
+
+### 2. 用公开抖音链接运行
+
 ```bash
 python3 scripts/run_breakdown.py \
   --source "https://v.douyin.com/your-link/" \
   --out-root "$HOME/douyin-video-breakdowns"
 ```
+
+### 3. 生成 HTML
 
 Runner 完成后，AI 读取证据和自动初稿，生成最终的 `完整拆解报告.md`，并在同一 run directory 写入 `report-web.json`，然后运行：
 
