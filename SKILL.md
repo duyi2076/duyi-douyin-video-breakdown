@@ -50,7 +50,7 @@ python3 "{SKILL_ROOT}/scripts/transcribe_with_doubao.py" --preflight
 - `ffmpeg`、`ffprobe`、Python 的 `markdown` 包、Node.js 和 `yt-dlp` 缺少时，先自动安装再运行。
 - 抖音链接采集还需要 `opencli` CLI 和 Chrome Browser Bridge。缺少 `opencli` 时，AI 应通过可信 npm 安装 `@jackwener/opencli`，然后运行 `opencli --version` 和 `opencli doctor` 验证。具体流程见 [`references/opencli-setup.md`](references/opencli-setup.md)。
 - `opencli` 的 Chrome 扩展、OpenCLIApp 安装和抖音登录需要用户在本机确认，AI 不复制浏览器 Profile、不导出 Cookie，也不把 `opencli` 二进制或扩展打包进本 Skill。
-- 只有 CLI 没有 Browser Bridge 时，不要假装页面采集成功；改用本地视频，或明确报告链接采集被浏览器连接阻塞。
+- 只有 CLI 没有 Browser Bridge 时，AI 必须把 [`references/opencli-setup.md`](references/opencli-setup.md) 中的连接步骤直接告诉用户；不要只报错，也不要假装页面采集成功。用户仍未连接时，改用本地视频，或明确报告链接采集被浏览器连接阻塞。
 
 安装后必须用版本命令、`--preflight` 或一次真实小流程验证，不以“安装命令返回 0”作为成功证据。需要管理员权限、登录、凭证或不明来源安装包时，停止并向用户说明具体阻塞点。
 

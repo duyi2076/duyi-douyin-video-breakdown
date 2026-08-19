@@ -29,7 +29,36 @@ opencli profile list
 
 1. 安装 OpenCLI 官方 Chrome Web Store 扩展，或安装 OpenCLIApp。
 2. 在 Chrome 中打开抖音并登录目标账号。
-3. 重新运行 `opencli doctor`，直到浏览器连接正常。
+3. 确认扩展已启用，并按 Chrome 提示允许它访问目标网站。
+4. 重新运行 `opencli doctor`，直到浏览器连接正常。
+
+AI 应直接把下面这段操作告诉用户，而不是只报“未连接”：
+
+```text
+请保持 Chrome 开着，并在 Chrome 里打开抖音、确认已经登录。
+如果还没有 OpenCLI Browser Bridge，请安装官方扩展或 OpenCLIApp，并启用它。
+然后在终端运行：
+
+opencli doctor
+```
+
+如果用户有多个 Chrome Profile：
+
+```bash
+opencli profile list
+opencli profile use <已配置的别名>
+opencli doctor
+```
+
+如果是本地 Daemon 未运行：
+
+```bash
+opencli daemon restart
+opencli doctor
+```
+
+连续两次 `doctor` 仍然失败时，停止重装和重试，把 `doctor` 的具体输出作为阻塞信息
+交给用户；不要复制 Cookie 或浏览器 Profile，也不要绕过扩展权限。
 
 AI 不应静默修改 Chrome 扩展、复制浏览器 Profile 或导出 Cookie 文件。浏览器
 扩展安装和登录属于用户确认边界。
