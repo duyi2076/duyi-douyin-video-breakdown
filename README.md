@@ -1,4 +1,4 @@
-# duyi-douyin-video-breakdown-v3
+# duyi-douyin-video-breakdown
 
 把公开抖音链接整理成可核验的证据目录、深度拆解报告和本地 HTML 页面。
 
@@ -42,7 +42,7 @@
 没有自动安装器时，可以手动克隆到本机的 Skill 目录：
 
 ```bash
-git clone https://github.com/duyi2076/duyi-douyin-video-breakdown.git "$HOME/.agents/skills/duyi-douyin-video-breakdown-v3"
+git clone https://github.com/duyi2076/duyi-douyin-video-breakdown.git "$HOME/.agents/skills/duyi-douyin-video-breakdown"
 ```
 
 安装后让 AI 读取 `SKILL.md`。AI 会自行检查并安装运行所需的公开依赖，包括 Whisper、FFmpeg、Node.js、yt-dlp 和 OpenCLI；浏览器扩展安装、抖音登录等需要用户一次确认。

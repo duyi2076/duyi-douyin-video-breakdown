@@ -1,9 +1,9 @@
 ---
-name: duyi-douyin-video-breakdown-v3
+name: duyi-douyin-video-breakdown
 description: 公开核心版抖音视频拆解工作流。接收公开抖音链接，保存可核验证据，生成结构化深度拆解和 HTML 报告。适用于分析视频为什么有效、如何迁移结构、如何形成填空模板与评论选题。不包含个人知识库或远端工作台同步。
 ---
 
-# 抖音视频拆解 V3
+# 抖音视频拆解
 
 ## 目标
 

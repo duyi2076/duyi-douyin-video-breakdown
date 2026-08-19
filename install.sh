@@ -2,7 +2,7 @@
 set -euo pipefail
 
 repo_root=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
-skill_name="duyi-douyin-video-breakdown-v3"
+skill_name="duyi-douyin-video-breakdown"
 skills_root="${DUYI_SKILLS_ROOT:-${HOME:?}/.agents/skills}"
 target="${skills_root}/${skill_name}"
 
